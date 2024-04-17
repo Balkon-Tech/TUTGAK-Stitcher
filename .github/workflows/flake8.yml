@@ -17,8 +17,8 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
-            - run: sudo apt-get install -y python-pip
-            - run: pip install --break-system-packages --upgrade pip
-            - run: pip install --break-system-packages flake8
+            - run: sudo apt-get install -y python3-pip
+            - run: pip3 install --break-system-packages --upgrade pip3
+            - run: pip3 install --break-system-packages flake8
             - name: Lint with flake8
               run: flake8
