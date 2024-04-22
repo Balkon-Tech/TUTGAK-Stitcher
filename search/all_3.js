@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['stitcher_0',['Stitcher',['../classstitcher_1_1Stitcher.html',1,'stitcher']]]
+  ['imagehistory_0',['ImageHistory',['../classimage__history_1_1ImageHistory.html',1,'image_history']]]
 ];
