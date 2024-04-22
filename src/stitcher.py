@@ -14,5 +14,10 @@ class Stitcher:
         self.history: ImageHistory = ImageHistory()
 
         # Matchers
-        self.sift_matcher: cv2.SIFT = cv2.SIFT.create()
+        index_params = dict(algorithm=1, trees=5)
+        search_params = dict(checks=50)
+        self.flann_matcher: cv2.FlannBasedMatcher = cv2.FlannBasedMatcher(
+            index_params,
+            search_params
+        )
         self.bf_matcher: cv2.BFMatcher = cv2.BFMatcher.create()
