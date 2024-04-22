@@ -3,6 +3,14 @@ import numpy as np
 
 
 class HistoryEntry:
+    """!
+        @brief Represents an history entry
+
+        History entry is an object that holds some information about a
+        particular state of the Stitcher, such as the homography matrix,
+        the original image etc.
+    """
+
     def __init__(self,
                  original_image: np.ndarray,
                  warped_image: np.ndarray,
