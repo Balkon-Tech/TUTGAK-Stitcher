@@ -1,17 +1,17 @@
 import cv2
-from image_history import ImageHistory
+from state_history import StateHistory
 
 
 class Stitcher:
     """!
-        A Stitcher is responsible with stitching your images
+        Stitcher is responsible with stitching provided images
     """
 
     def __init__(self) -> None:
         """
         Creates a Stitcher object
         """
-        self.history: ImageHistory = ImageHistory()
+        self.history: StateHistory = StateHistory()
 
         # Matchers
         index_params = dict(algorithm=1, trees=5)

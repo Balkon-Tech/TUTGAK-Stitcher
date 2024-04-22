@@ -1,14 +1,15 @@
 import datetime as dt
 import numpy as np
+from typing import Any
 
 
-class HistoryEntry:
+class StitcherState:
     """!
-        @brief Represents an history entry
+        @brief Represents a state of the stitcher
 
-        History entry is an object that holds some information about a
+        A StitcherState object, holds some information about a
         particular state of the Stitcher, such as the homography matrix,
-        the original image etc.
+        the original image, etc.
     """
 
     def __init__(self,
@@ -17,9 +18,9 @@ class HistoryEntry:
                  x_warped: int,
                  y_warped: int,
                  homography: np.ndarray,
-                 metadata: str) -> None:
+                 metadata: Any) -> None:
         """!
-        @brief Creates a new HistoryEntry object
+        @brief Creates a new StitcherState object
 
         @param original_image Original, untransformed image
         @param warped_image Image after warping
@@ -42,9 +43,9 @@ class HistoryEntry:
 
     def __str__(self) -> str:
         """!
-        @brief Converts an HistoryEntry object to string
+        @brief Converts a StitcherState object to string
 
-        @return String representation of HistoryEntry object
+        @return String representation of StitcherState object
         """
         return f"Determinant: {self.__det}, Warped Image Coords: " \
-            "({self.x_warped}, {self.y_warped}), Metadata: {self.metadata}"
+            f"({self.x_warped}, {self.y_warped}), Metadata: {self.metadata}"

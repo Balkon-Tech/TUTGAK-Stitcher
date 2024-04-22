@@ -4,7 +4,7 @@ from typing import Union
 
 class HomographyCalculator:
     """!
-        Provides methods for calculating homography matrices
+        Provides methods related to homography matrices
     """
     @staticmethod
     def calculate_error(points: np.ndarray, H: np.ndarray) -> np.ndarray:
