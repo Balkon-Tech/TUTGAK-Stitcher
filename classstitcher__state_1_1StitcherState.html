@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.10.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>TUTGAK-Stitcher: history_entry.HistoryEntry Class Reference</title>
+<title>TUTGAK-Stitcher: stitcher_state.StitcherState Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -72,50 +72,50 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>history_entry</b></li><li class="navelem"><a class="el" href="classhistory__entry_1_1HistoryEntry.html">HistoryEntry</a></li>  </ul>
+<li class="navelem"><b>stitcher_state</b></li><li class="navelem"><a class="el" href="classstitcher__state_1_1StitcherState.html">StitcherState</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="classhistory__entry_1_1HistoryEntry-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">history_entry.HistoryEntry Class Reference</div></div>
+<a href="classstitcher__state_1_1StitcherState-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">stitcher_state.StitcherState Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Represents an history entry.  
+<p>Represents a state of the stitcher.  
  <a href="#details">More...</a></p>
 <div class="dynheader">
-Inheritance diagram for history_entry.HistoryEntry:</div>
+Inheritance diagram for stitcher_state.StitcherState:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classhistory__entry_1_1HistoryEntry.png" usemap="#history_5Fentry.HistoryEntry_map" alt=""/>
-  <map id="history_5Fentry.HistoryEntry_map" name="history_5Fentry.HistoryEntry_map">
-<area href="classimage__history_1_1ImageHistory.html" title="An ImageHistory object contiguously stores HistoryEntry Objects." alt="image_history.ImageHistory" shape="rect" coords="0,56,167,80"/>
+  <img src="classstitcher__state_1_1StitcherState.png" usemap="#stitcher_5Fstate.StitcherState_map" alt=""/>
+  <map id="stitcher_5Fstate.StitcherState_map" name="stitcher_5Fstate.StitcherState_map">
+<area href="classstate__history_1_1StateHistory.html" title="A StateHistory object contiguously stores StitcherState objects." alt="state_history.StateHistory" shape="rect" coords="0,56,161,80"/>
   </map>
 </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aad6c18f57ba1637fc33e4933492cb62b" id="r_aad6c18f57ba1637fc33e4933492cb62b"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aad6c18f57ba1637fc33e4933492cb62b">__init__</a> (self, np.ndarray original_image, np.ndarray warped_image, int x_warped, int y_warped, np.ndarray homography, str metadata)</td></tr>
-<tr class="memdesc:aad6c18f57ba1637fc33e4933492cb62b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new HistoryEntry object.  <br /></td></tr>
-<tr class="separator:aad6c18f57ba1637fc33e4933492cb62b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7c280dfcbad18b1cd4478c97ace92a0b" id="r_a7c280dfcbad18b1cd4478c97ace92a0b"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7c280dfcbad18b1cd4478c97ace92a0b">__str__</a> (self)</td></tr>
-<tr class="memdesc:a7c280dfcbad18b1cd4478c97ace92a0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts an HistoryEntry object to string.  <br /></td></tr>
-<tr class="separator:a7c280dfcbad18b1cd4478c97ace92a0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ef5f8b73ec39b9be8962c951e141c0a" id="r_a3ef5f8b73ec39b9be8962c951e141c0a"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3ef5f8b73ec39b9be8962c951e141c0a">__init__</a> (self, np.ndarray original_image, np.ndarray warped_image, int x_warped, int y_warped, np.ndarray homography, Any metadata)</td></tr>
+<tr class="memdesc:a3ef5f8b73ec39b9be8962c951e141c0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new StitcherState object.  <br /></td></tr>
+<tr class="separator:a3ef5f8b73ec39b9be8962c951e141c0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a751ead21d03aa378684aedd669269161" id="r_a751ead21d03aa378684aedd669269161"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a751ead21d03aa378684aedd669269161">__str__</a> (self)</td></tr>
+<tr class="memdesc:a751ead21d03aa378684aedd669269161"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a StitcherState object to string.  <br /></td></tr>
+<tr class="separator:a751ead21d03aa378684aedd669269161"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Represents an history entry. </p>
-<p>History entry is an object that holds some information about a particular state of the Stitcher, such as the homography matrix, the original image etc. </p>
+<div class="textblock"><p>Represents a state of the stitcher. </p>
+<p>A StitcherState object, holds some information about a particular state of the Stitcher, such as the homography matrix, the original image, etc. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="aad6c18f57ba1637fc33e4933492cb62b" name="aad6c18f57ba1637fc33e4933492cb62b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aad6c18f57ba1637fc33e4933492cb62b">&#9670;&#160;</a></span>__init__()</h2>
+<a id="a3ef5f8b73ec39b9be8962c951e141c0a" name="a3ef5f8b73ec39b9be8962c951e141c0a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3ef5f8b73ec39b9be8962c951e141c0a">&#9670;&#160;</a></span>__init__()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"> None history_entry.HistoryEntry.__init__ </td>
+          <td class="memname"> None stitcher_state.StitcherState.__init__ </td>
           <td>(</td>
           <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em>, </span></td>
         </tr>
@@ -147,12 +147,12 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">str</td>          <td class="paramname"><span class="paramname"><em>metadata</em></span>&#160;)</td>
+          <td class="paramtype">Any</td>          <td class="paramname"><span class="paramname"><em>metadata</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Creates a new HistoryEntry object. </p>
+<p>Creates a new StitcherState object. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">original_image</td><td>Original, untransformed image </td></tr>
@@ -165,19 +165,19 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented in <a class="el" href="classimage__history_1_1ImageHistory.html#a24ba2e86ece3351a9a0c32da5893ebb1">image_history.ImageHistory</a>.</p>
+<p>Reimplemented in <a class="el" href="classstate__history_1_1StateHistory.html#a24f38b28f37dcca173017e158ad17c67">state_history.StateHistory</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a7c280dfcbad18b1cd4478c97ace92a0b" name="a7c280dfcbad18b1cd4478c97ace92a0b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7c280dfcbad18b1cd4478c97ace92a0b">&#9670;&#160;</a></span>__str__()</h2>
+<a id="a751ead21d03aa378684aedd669269161" name="a751ead21d03aa378684aedd669269161"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a751ead21d03aa378684aedd669269161">&#9670;&#160;</a></span>__str__()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"> str history_entry.HistoryEntry.__str__ </td>
+          <td class="memname"> str stitcher_state.StitcherState.__str__ </td>
           <td>(</td>
           <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
           <td></td>
@@ -185,13 +185,13 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Converts an HistoryEntry object to string. </p>
-<dl class="section return"><dt>Returns</dt><dd>String representation of HistoryEntry object </dd></dl>
+<p>Converts a StitcherState object to string. </p>
+<dl class="section return"><dt>Returns</dt><dd>String representation of StitcherState object </dd></dl>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>src/<b>history_entry.py</b></li>
+<li>src/<b>stitcher_state.py</b></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
