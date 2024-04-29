@@ -1,13 +1,23 @@
 import numpy as np
-from typing import Union
+from typing import Optional
 
 
 class HomographyCalculator:
     """!
-        Provides methods related to homography matrices
+        Provides methods for calculating homography matrices and
+        measuring their error.
     """
     @staticmethod
-    def calculate_error(points: np.ndarray, H: np.ndarray) -> np.ndarray:
+    def calculate_homography_error(
+            points: np.ndarray,
+            H: np.ndarray) -> np.ndarray:
+        """
+        Calculates an error value for the given homography matrix
+
+        :param points: Point pairs
+        :param H: Homography matrix
+        :return: Error of each point
+        """
         num_points: int = len(points)
         all_p1: np.ndarray = np.concatenate(
             (points[:, 0:2], np.ones((num_points, 1))),
@@ -68,8 +78,7 @@ class HomographyCalculator:
             matches: np.ndarray,
             random_point_count: int,
             threshold: float,
-            iterations: int
-            ) -> Union[None, np.ndarray]:
+            iterations: int) -> Optional[np.ndarray]:
         """
         Use RANSAC to calculate a good homography matrix
 
@@ -81,7 +90,7 @@ class HomographyCalculator:
         :return: A good homography matrix, or None if none could be found
         """
         num_best_inliers: int = 0
-        best_inliers: Union[None, np.ndarray] = None
+        best_inliers: Optional[np.ndarray] = None
 
         i = 0
         while i < iterations:
@@ -94,7 +103,7 @@ class HomographyCalculator:
             if np.linalg.matrix_rank(H):
                 continue
 
-            errors: np.ndarray = HomographyCalculator.calculate_error(
+            errors: np.ndarray = HomographyCalculator.calculate_homography_error(  # noqa E501
                 points, H
             )
             idx: np.ndarray = np.where(errors < threshold)[0]
@@ -109,4 +118,6 @@ class HomographyCalculator:
 
         if best_inliers is None:
             return None
-        return HomographyCalculator.calculate_homography(best_inliers)
+        H = HomographyCalculator.calculate_homography(best_inliers)
+        H /= H[2, 2]
+        return H

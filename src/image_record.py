@@ -3,11 +3,11 @@ import numpy as np
 from typing import Any
 
 
-class StitcherState:
+class ImageRecord:
     """!
-        @brief Represents a state of the stitcher
+        :brief Represents a state of the stitcher
 
-        A StitcherState object, holds some information about a
+        A ImageRecord object, holds some information about a
         particular state of the Stitcher, such as the homography matrix,
         the original image, etc.
     """
@@ -15,24 +15,27 @@ class StitcherState:
     def __init__(self,
                  original_image: np.ndarray,
                  warped_image: np.ndarray,
+                 warped_gray: np.ndarray,
                  x_warped: int,
                  y_warped: int,
                  homography: np.ndarray,
                  metadata: Any) -> None:
         """!
-        @brief Creates a new StitcherState object
+        :brief Creates a new ImageRecord object
 
-        @param original_image Original, untransformed image
-        @param warped_image Image after warping
-        @param x_warped X coordinate of the warped image on the final image
-        @param y_warped Y coordinate of the warped image on the final image
-        @param homography The homography matrix that is used to transform
+        :param original_image Original, untransformed image
+        :param warped_image Image after warping
+        :param warped_gray Image after warping, gray
+        :param x_warped X coordinate of the warped image on the final image
+        :param y_warped Y coordinate of the warped image on the final image
+        :param homography The homography matrix that is used to transform
                original image to warped_image
-        @param metadata Metadata that you want to associate with this object
+        :param metadata Metadata that you want to associate with this object
         """
 
         self.original_image: np.ndarray = original_image
         self.warped_image: np.ndarray = warped_image
+        self.warped_gray: np.ndarray = warped_gray
         self.x_warped: int = x_warped
         self.y_warped: int = y_warped
         self.homography: np.ndarray = homography
@@ -43,9 +46,9 @@ class StitcherState:
 
     def __str__(self) -> str:
         """!
-        @brief Converts a StitcherState object to string
+        :brief Converts a ImageRecord object to string
 
-        @return String representation of StitcherState object
+        :return String representation of ImageRecord object
         """
         return f"Determinant: {self.__det}, Warped Image Coords: " \
             f"({self.x_warped}, {self.y_warped}), Metadata: {self.metadata}"
