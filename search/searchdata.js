@@ -1,8 +1,8 @@
 var indexSectionsWithContent =
 {
-  0: "_chrs",
-  1: "hs",
-  2: "_cr"
+  0: "_chikmprs",
+  1: "hikms",
+  2: "_cmpr"
 };
 
 var indexSectionNames =

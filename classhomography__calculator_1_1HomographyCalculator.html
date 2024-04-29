@@ -83,21 +83,20 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Provides methods related to homography matrices.  
+<p>Provides methods for calculating homography matrices and measuring their error.  
  <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:aef46e81e80efd98483a869246bd8a012" id="r_aef46e81e80efd98483a869246bd8a012"><td class="memItemLeft" align="right" valign="top"><a id="aef46e81e80efd98483a869246bd8a012" name="aef46e81e80efd98483a869246bd8a012"></a>
-np.ndarray&#160;</td><td class="memItemRight" valign="bottom"><b>calculate_error</b> (np.ndarray points, np.ndarray H)</td></tr>
-<tr class="separator:aef46e81e80efd98483a869246bd8a012"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c7ab5f925ad4ddd6f546d48e3680169" id="r_a6c7ab5f925ad4ddd6f546d48e3680169"><td class="memItemLeft" align="right" valign="top">np.ndarray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6c7ab5f925ad4ddd6f546d48e3680169">calculate_homography_error</a> (np.ndarray points, np.ndarray H)</td></tr>
+<tr class="separator:a6c7ab5f925ad4ddd6f546d48e3680169"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9d2970d8b383810a188c022bd4bc3fc9" id="r_a9d2970d8b383810a188c022bd4bc3fc9"><td class="memItemLeft" align="right" valign="top">np.ndarray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9d2970d8b383810a188c022bd4bc3fc9">calculate_homography</a> (np.ndarray pairs)</td></tr>
 <tr class="separator:a9d2970d8b383810a188c022bd4bc3fc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a222ee2461d6f18270bc59aaa87f0a322" id="r_a222ee2461d6f18270bc59aaa87f0a322"><td class="memItemLeft" align="right" valign="top">Union[None, np.ndarray]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a222ee2461d6f18270bc59aaa87f0a322">ransac</a> (np.ndarray matches, int random_point_count, float threshold, int iterations)</td></tr>
-<tr class="separator:a222ee2461d6f18270bc59aaa87f0a322"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a047cf1621eca0e2fa32f0fa4b0f34024" id="r_a047cf1621eca0e2fa32f0fa4b0f34024"><td class="memItemLeft" align="right" valign="top">Optional[np.ndarray]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a047cf1621eca0e2fa32f0fa4b0f34024">ransac</a> (np.ndarray matches, int random_point_count, float threshold, int iterations)</td></tr>
+<tr class="separator:a047cf1621eca0e2fa32f0fa4b0f34024"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Provides methods related to homography matrices. </p>
+<div class="textblock"><p>Provides methods for calculating homography matrices and measuring their error. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a9d2970d8b383810a188c022bd4bc3fc9" name="a9d2970d8b383810a188c022bd4bc3fc9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9d2970d8b383810a188c022bd4bc3fc9">&#9670;&#160;</a></span>calculate_homography()</h2>
@@ -128,8 +127,8 @@ np.ndarray&#160;</td><td class="memItemRight" valign="bottom"><b>calculate_error
 </pre> 
 </div>
 </div>
-<a id="a222ee2461d6f18270bc59aaa87f0a322" name="a222ee2461d6f18270bc59aaa87f0a322"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a222ee2461d6f18270bc59aaa87f0a322">&#9670;&#160;</a></span>ransac()</h2>
+<a id="a6c7ab5f925ad4ddd6f546d48e3680169" name="a6c7ab5f925ad4ddd6f546d48e3680169"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c7ab5f925ad4ddd6f546d48e3680169">&#9670;&#160;</a></span>calculate_homography_error()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -138,7 +137,41 @@ np.ndarray&#160;</td><td class="memItemRight" valign="bottom"><b>calculate_error
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"> Union[None, np.ndarray] homography_calculator.HomographyCalculator.ransac </td>
+          <td class="memname"> np.ndarray homography_calculator.HomographyCalculator.calculate_homography_error </td>
+          <td>(</td>
+          <td class="paramtype">np.ndarray</td>          <td class="paramname"><span class="paramname"><em>points</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">np.ndarray</td>          <td class="paramname"><span class="paramname"><em>H</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">Calculates an error value for the given homography matrix
+
+:param points: Point pairs
+:param H: Homography matrix
+:return: Error of each point
+</pre> 
+</div>
+</div>
+<a id="a047cf1621eca0e2fa32f0fa4b0f34024" name="a047cf1621eca0e2fa32f0fa4b0f34024"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a047cf1621eca0e2fa32f0fa4b0f34024">&#9670;&#160;</a></span>ransac()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"> Optional[np.ndarray] homography_calculator.HomographyCalculator.ransac </td>
           <td>(</td>
           <td class="paramtype">np.ndarray</td>          <td class="paramname"><span class="paramname"><em>matches</em>, </span></td>
         </tr>
@@ -155,8 +188,7 @@ np.ndarray&#160;</td><td class="memItemRight" valign="bottom"><b>calculate_error
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int
-            </td>          <td class="paramname"><span class="paramname"><em>iterations</em></span>&#160;)</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>iterations</em></span>&#160;)</td>
         </tr>
       </table>
   </td>

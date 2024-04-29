@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['ransac_0',['ransac',['../classhomography__calculator_1_1HomographyCalculator.html#a222ee2461d6f18270bc59aaa87f0a322',1,'homography_calculator::HomographyCalculator']]]
+  ['imagehistory_0',['ImageHistory',['../classimage__history_1_1ImageHistory.html',1,'image_history']]],
+  ['imagerecord_1',['ImageRecord',['../classimage__record_1_1ImageRecord.html',1,'image_record']]]
 ];
