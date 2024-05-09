@@ -103,7 +103,7 @@ class HomographyCalculator:
             if np.linalg.matrix_rank(H):
                 continue
 
-            errors: np.ndarray = HomographyCalculator.calculate_homography_error(  # noqa E501
+            errors: np.ndarray = HomographyCalculator.calculate_homography_error(
                 points, H
             )
             idx: np.ndarray = np.where(errors < threshold)[0]
