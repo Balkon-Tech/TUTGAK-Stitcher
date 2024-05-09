@@ -1,7 +1,7 @@
 var indexSectionsWithContent =
 {
-  0: "_chikmprs",
-  1: "hikms",
+  0: "_chikmprsu",
+  1: "hikmsu",
   2: "_cmpr"
 };
 
