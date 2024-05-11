@@ -3,10 +3,11 @@ import numpy as np
 from homography_calculator import HomographyCalculator
 from image_history import ImageHistory
 from image_record import ImageRecord
-from typing import Optional
+from typing import Optional, Tuple
 from kdtuple import KDTuple
 from matcher import Matcher
 from util import Util
+import math
 
 
 class Stitcher:
@@ -154,13 +155,15 @@ class Stitcher:
         )
 
         homography = np.dot(translation_matrix, homography)
+        assert homography != None
+
         warped_image: np.ndarray = cv2.warpPerspective(
             src=image,
             M=homography,
             dsize=(destination_width, destination_height)
         )
 
-        self.paste_image(
+        x_img, y_img = self.paste_image(
             warped_image,
             int(x_offset),
             int(y_offset),
@@ -174,8 +177,8 @@ class Stitcher:
                 image,
                 warped_image,
                 warped_gray,
-                x_offset,
-                y_offset,
+                x_img,
+                y_img,
                 homography,
                 None
             )
@@ -188,14 +191,61 @@ class Stitcher:
             image: np.ndarray,
             x_offset: int = 0,
             y_offset: int = 0,
-            whole_image: bool = False):
+            whole_image: bool = False) -> Tuple[int, int]:
 
         if self.full_image is None:
             # This is the first image
             self.full_image = image
-            return
+            return 0, 0
 
-        # TODO: Implement here
+        height, width, channels = self.full_image.shape
+        img_height, img_width, img_channels = image.shape
+
+        last_record: ImageRecord = self.history[-1]
+        last_x: int = last_record.x_warped
+        last_y: int = last_record.y_warped
+
+        if whole_image:
+            last_x = last_y = 0
+
+        x_left: int = math.floor(min(0, last_x - x_offset))
+        y_top: int = math.floor(min(0, last_y - y_offset))
+        x_right: int = math.ceil(max(width, last_x - x_offset + img_width))
+        y_bottom: int = math.ceil(max(height, last_y - y_offset + img_height))
+
+        new_width: int = x_right - x_left
+        new_height: int = y_bottom - y_top
+
+        current_image: np.ndarray = self.full_image
+        x_full_image: int = -x_left
+        y_full_image: int = -y_top
+
+        # Create a new canvas and paste the full image
+        self.full_image = np.zeros(shape=(new_height, new_width, channels))
+        self.full_image[
+            y_full_image : y_full_image + height,
+            x_full_image : x_full_image + width,
+            :
+        ] = current_image
+
+        # x and y coordinates of the parameter "image"
+        x_img: int = x_full_image + last_x - x_offset
+        y_img: int = y_full_image + last_y - y_offset
+
+        alpha_new = image[:, :, 3] / 255
+
+        for c in range(channels):
+            self.full_image[
+                y_img : y_img + img_height,
+                x_img : x_img + img_width,
+                c
+            ] = alpha_new * image[:, :, c] + self.full_image[
+                    y_img : y_img + img_height,
+                    x_img : x_img + img_width,
+                    c
+                ] * (1 - alpha_new)
+        
+        return x_img, y_img
 
     def detectAndCompute(self, image: np.ndarray) -> KDTuple:
         kpts, descriptors = self.sift_extractor.detectAndCompute(image, None)
