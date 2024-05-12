@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['preprocess_5fimage_0',['preprocess_image',['../classstitcher_1_1Stitcher.html#a1a662cb0f16e78845c867e62a8e60204',1,'stitcher::Stitcher']]]
+  ['ransac_0',['ransac',['../classhomography__calculator_1_1HomographyCalculator.html#a047cf1621eca0e2fa32f0fa4b0f34024',1,'homography_calculator::HomographyCalculator']]]
 ];

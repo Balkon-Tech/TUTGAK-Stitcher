@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['kdtuple_0',['KDTuple',['../classkdtuple_1_1KDTuple.html',1,'kdtuple']]]
+  ['imagehistory_0',['ImageHistory',['../classimage__history_1_1ImageHistory.html',1,'image_history']]],
+  ['imagerecord_1',['ImageRecord',['../classimage__record_1_1ImageRecord.html',1,'image_record']]]
 ];
