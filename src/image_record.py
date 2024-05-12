@@ -5,9 +5,9 @@ from typing import Any
 
 class ImageRecord:
     """!
-        :brief Represents a state of the stitcher
+        @brief Represents a state of the stitcher
 
-        A ImageRecord object, holds some information about a
+        An ImageRecord object, holds some information about a
         particular state of the Stitcher, such as the homography matrix,
         the original image, etc.
     """
@@ -21,16 +21,16 @@ class ImageRecord:
                  homography: np.ndarray,
                  metadata: Any) -> None:
         """!
-        :brief Creates a new ImageRecord object
+        @brief Creates a new ImageRecord object
 
-        :param original_image Original, untransformed image
-        :param warped_image Image after warping
-        :param warped_gray Image after warping, gray
-        :param x_warped X coordinate of the warped image on the final image
-        :param y_warped Y coordinate of the warped image on the final image
-        :param homography The homography matrix that is used to transform
+        @param original_image Original, untransformed image
+        @param warped_image Image after warping
+        @param warped_gray Image after warping, gray
+        @param x_warped X coordinate of the warped image on the final image
+        @param y_warped Y coordinate of the warped image on the final image
+        @param homography The homography matrix that is used to transform
                original image to warped_image
-        :param metadata Metadata that you want to associate with this object
+        @param metadata Extra data to hold with the current state
         """
 
         self.original_image: np.ndarray = original_image
@@ -46,9 +46,9 @@ class ImageRecord:
 
     def __str__(self) -> str:
         """!
-        :brief Converts a ImageRecord object to string
+        @brief Converts an ImageRecord object to a string
 
-        :return String representation of ImageRecord object
+        @return String representation of the ImageRecord object
         """
         return f"Determinant: {self.__det}, Warped Image Coords: " \
             f"({self.x_warped}, {self.y_warped}), Metadata: {self.metadata}"

@@ -4,19 +4,21 @@ from typing import Optional
 
 class HomographyCalculator:
     """!
-        Provides methods for calculating homography matrices and
+        @brief Provides methods for calculating homography matrices and
         measuring their error.
     """
     @staticmethod
     def calculate_homography_error(
             points: np.ndarray,
             H: np.ndarray) -> np.ndarray:
-        """
-        Calculates an error value for the given homography matrix
+        """!
+        @brief Calculates an error value for the given homography matrix
+        TODO: Detailed description
 
-        :param points: Point pairs
-        :param H: Homography matrix
-        :return: Error of each point
+        @param points Point pairs
+        @param H Homography matrix
+
+        @return An error value for each point
         """
         num_points: int = len(points)
         all_p1: np.ndarray = np.concatenate(
@@ -41,11 +43,13 @@ class HomographyCalculator:
 
     @staticmethod
     def calculate_homography(pairs: np.ndarray) -> np.ndarray:
-        """
-        Calculates the homography matrix for the given pairs
+        """!
+        @brief Calculates the homography matrix for the given pairs of points
+        TODO: Detailed description
 
-        :param pairs: Matching pairs of coordinates
-        :return: Homography matrix
+        @param pairs Matching pairs of coordinates
+
+        @return Homography matrix
         """
         rows_list: list[list[float]] = []
 
@@ -79,15 +83,17 @@ class HomographyCalculator:
             random_point_count: int,
             threshold: float,
             iterations: int) -> Optional[np.ndarray]:
-        """
-        Use RANSAC to calculate a good homography matrix
+        """!
+        @brief Use RANSAC to calculate a good homography matrix
+        TODO: Detailed desctiption
 
-        :param matches: Matched points
-        :param random_point_count: The amount of random points used to
+        @param matches Matched points
+        @param random_point_count The amount of random points used to
                                    calculate the homography matrix
-        :param threshold: Error threshold
-        :param iterations: Number of iterations
-        :return: A good homography matrix, or None if none could be found
+        @param threshold Error threshold
+        @param iterations Number of iterations
+
+        @return A good homography matrix, or None if none could be found
         """
         num_best_inliers: int = 0
         best_inliers: Optional[np.ndarray] = None

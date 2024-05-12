@@ -16,11 +16,14 @@ class Matcher:
             kd_right: KDTuple,
             threshold: float = 0.75) -> np.ndarray:
         """
+        @brief Performs a match between two KDTuples
         Performs a KnnMatch between kd_left.descriptor and kd_right.descriptor.
-        Filters out the bad matches and returns the matches as np.ndarray
+        Filters out the bad matches and returns the good matches as an np.ndarray
 
-        :param matcher: Matcher object
-        :param threshold: Filter threshold. Defaults to 0.75
+        @param matcher Matcher object
+        @param threshold Filter threshold. Defaults to 0.75
+
+        @return Good matches
         """
         matches = matcher.knnMatch(
             kd_left.descriptors, kd_right.descriptors, k=2

@@ -7,18 +7,22 @@ from typing import Optional, Tuple
 from kdtuple import KDTuple
 from matcher import Matcher
 from util import Util
-from brighness import Brightness
 import math
 
 
 class Stitcher:
     """!
-        Stitcher is responsible with stitching provided images
+        @brief Stitcher is responsible with stitching provided images
+
+        TODO: Stitcher detailed description
     """
 
     def __init__(self, target_brightness: int = 110) -> None:
-        """
-        Creates a Stitcher object
+        """!
+        @brief Creates a Stitcher object
+
+        @param target_brightness Target brightness of the input images.
+        TODO: pass settings as a dictionary
         """
         # History related parameters
         self.history: ImageHistory = ImageHistory()
@@ -40,17 +44,30 @@ class Stitcher:
         self.sift_extractor: cv2.SIFT = cv2.SIFT.create()
 
     def __preprocess_image(self, image: np.ndarray) -> np.ndarray:
-        """
-        Preprocesses the given image. Converts it from BGR to BGRA and applies a mean shift
+        """!
+        @brief Preprocesses the given image.
+        Converts it from BGR to BGRA and applies a mean shift to shift the
+        mean of the image to the target_brightness parameter
 
-        :param image: Input image
-        :return: Preprocessed image
+        @param image: Input image
+
+        @return Preprocessed image
         """
         image = cv2.cvtColor(image, cv2.COLOR_BGR2BGRA)
-        image = Brightness.mean_shift_gray(image, self.target_brightness)
+        image = Util.mean_shift_gray(image, self.target_brightness)
         return image
 
-    def stitch(self, image: np.ndarray, whole_image=False) -> bool:
+    def stitch(self, image: np.ndarray, whole_image: bool = False) -> bool:
+        """!
+        @brief Stitches the given image to the full_image
+        TODO: Detailed description
+
+        @param image: Image to stitch
+        @param whole_image: If set to true, it uses full_image instead of the last stitched
+                            image for stitching
+
+        @return True if stitching was successful, False otherwise
+        """
         current_image: np.ndarray = self.__preprocess_image(image)
         current_gray: np.ndarray = cv2.cvtColor(current_image, cv2.COLOR_BGRA2GRAY)
 
@@ -217,15 +234,17 @@ class Stitcher:
             x_offset: int = 0,
             y_offset: int = 0,
             whole_image: bool = False) -> Tuple[int, int]:
-        """
-        Pastes the image to the self.full_image
+        """!
+        @brief Pastes the image to the full_image
+        TODO: Detailed description
 
-        :param image: Image to be pasted
-        :param x_offset: Horizontal offset from the last pasted image
-        :param y_offset: Vertical offset from the last pasted image
-        :param whole_image: If set to true, the offset applies to the whole image,
+        @param image Image to be pasted
+        @param x_offset Horizontal offset from the last pasted image
+        @param y_offset Vertical offset from the last pasted image
+        @param whole_image If set to true, the offset applies to the whole image,
                             not to the last pasted image
-        :return: The total offset of the image as a tuple of ints
+
+        @return The total offset of the image as a tuple of ints
         """
 
         if self.full_image is None:
@@ -283,11 +302,11 @@ class Stitcher:
         return x_img, y_img
 
     def __detect_and_compute(self, image: np.ndarray) -> KDTuple:
-        """
-        Detect and compute keypoints and descriptors of given image using SIFT
+        """!
+        @brief Detect and compute keypoints and descriptors of given image using SIFT
 
-        :param image: Image to find keypoints and descriptors
-        :return: Keypoints and descriptors as a KDTuple object
+        @param image Image to find keypoints and descriptors
+        @return Keypoints and descriptors as a KDTuple object
         """
         kpts, descriptors = self.sift_extractor.detectAndCompute(image, None)
         return KDTuple(kpts, descriptors)
