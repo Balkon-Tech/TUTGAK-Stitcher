@@ -94,13 +94,15 @@ class HomographyCalculator:
 
         i = 0
         while i < iterations:
-            points: np.ndarray = np.random.choice(matches,
-                                                  replace=False,
-                                                  size=random_point_count
-                                                  )
+            N: int = matches.shape[0]
+            indices = np.ndarray = np.random.choice(np.arange(N),
+                                                    replace=False,
+                                                    size=random_point_count
+                                                    )
+            points: np.ndarray = matches[indices]
             H = HomographyCalculator.calculate_homography(points)
 
-            if np.linalg.matrix_rank(H):
+            if np.linalg.matrix_rank(H) < 3:
                 continue
 
             errors: np.ndarray = HomographyCalculator.calculate_homography_error(

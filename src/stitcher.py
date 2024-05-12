@@ -69,8 +69,8 @@ class Stitcher:
 
         # Computes keypoints and descriptors using sift
         prev_gray: np.ndarray = last_record.warped_gray
-        kd_left = self.detectAndCompute(current_gray)
-        kd_right = self.detectAndCompute(prev_gray)
+        kd_left = self.detect_and_compute(current_gray)
+        kd_right = self.detect_and_compute(prev_gray)
 
         initial_random_point_count: int = 16
         iterations: int = 5
@@ -98,6 +98,7 @@ class Stitcher:
                 kd_right,
                 0.65
             )
+
             if len(matches) < random_point_count:
                 random_point_count -= 4
                 continue
@@ -120,8 +121,8 @@ class Stitcher:
                 [1,     1,      1,      1]
             ])
             new_corners: np.ndarray = homography.dot(corners)
+            new_corners /= new_corners[2]
             new_corners_T: np.ndarray = new_corners.T
-            new_corners_T /= new_corners_T[2]
 
             new_area: float = Util.calculate_area(new_corners_T)
             determinant: float = new_area / (width * height)
@@ -136,7 +137,6 @@ class Stitcher:
                 return self.stitch(image, True)
             return False
 
-        assert (homography is not None)
         # Calculates offsets of the image
         x_offset: int = -np.min(new_corners[0])
         y_offset: int = -np.min(new_corners[1])
@@ -155,10 +155,9 @@ class Stitcher:
         )
 
         homography = np.dot(translation_matrix, homography)
-        assert homography != None
 
         warped_image: np.ndarray = cv2.warpPerspective(
-            src=image,
+            src=current_image,
             M=homography,
             dsize=(destination_width, destination_height)
         )
@@ -174,7 +173,7 @@ class Stitcher:
 
         self.history.append(
             ImageRecord(
-                image,
+                current_image,
                 warped_image,
                 warped_gray,
                 x_img,
@@ -247,6 +246,6 @@ class Stitcher:
         
         return x_img, y_img
 
-    def detectAndCompute(self, image: np.ndarray) -> KDTuple:
+    def detect_and_compute(self, image: np.ndarray) -> KDTuple:
         kpts, descriptors = self.sift_extractor.detectAndCompute(image, None)
         return KDTuple(kpts, descriptors)

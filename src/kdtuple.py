@@ -4,5 +4,5 @@ import numpy as np
 
 @dataclass
 class KDTuple:
-    keypoint: tuple
-    descriptor: np.ndarray
+    keypoints: tuple
+    descriptors: np.ndarray

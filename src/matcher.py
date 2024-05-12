@@ -23,7 +23,7 @@ class Matcher:
         :param threshold: Filter threshold. Defaults to 0.75
         """
         matches = matcher.knnMatch(
-            kd_left.descriptor, kd_right.descriptor, k=2
+            kd_left.descriptors, kd_right.descriptors, k=2
         )
 
         # Apply ratio test
@@ -34,11 +34,9 @@ class Matcher:
 
         matches = []
         for pair in good:
-            matches.append(
-                [
-                    kd_left.keypoint[pair[0].queryIdx].pt +
-                    kd_right.keypoint[pair[0].trainIdx].pt
-                ]
-            )
+            matches.append(list(
+                kd_left.keypoints[pair[0].queryIdx].pt +
+                kd_right.keypoints[pair[0].trainIdx].pt
+            ))
 
         return np.array(matches)
