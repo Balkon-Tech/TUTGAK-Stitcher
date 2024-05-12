@@ -70,7 +70,7 @@ class HomographyCalculator:
         rows: np.ndarray = np.array(rows_list)
         _, _, V = np.linalg.svd(rows)
         H = V[-1].reshape(3, 3)
-        H /= H[2, 2]
+        H = H / H[2, 2]
         return H
 
     @staticmethod
@@ -95,10 +95,11 @@ class HomographyCalculator:
         i = 0
         while i < iterations:
             N: int = matches.shape[0]
-            indices = np.ndarray = np.random.choice(np.arange(N),
-                                                    replace=False,
-                                                    size=random_point_count
-                                                    )
+            indices: np.ndarray = np.random.choice(N,
+                                                   replace=False,
+                                                   size=random_point_count
+                                                   )
+
             points: np.ndarray = matches[indices]
             H = HomographyCalculator.calculate_homography(points)
 
@@ -106,7 +107,7 @@ class HomographyCalculator:
                 continue
 
             errors: np.ndarray = HomographyCalculator.calculate_homography_error(
-                points, H
+                matches, H
             )
             idx: np.ndarray = np.where(errors < threshold)[0]
             inliers: np.ndarray = matches[idx]
@@ -121,5 +122,5 @@ class HomographyCalculator:
         if best_inliers is None:
             return None
         H = HomographyCalculator.calculate_homography(best_inliers)
-        H /= H[2, 2]
+        H = H / H[2, 2]
         return H

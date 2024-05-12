@@ -7,6 +7,7 @@ from typing import Optional, Tuple
 from kdtuple import KDTuple
 from matcher import Matcher
 from util import Util
+from brighness import Brightness
 import math
 
 
@@ -15,14 +16,16 @@ class Stitcher:
         Stitcher is responsible with stitching provided images
     """
 
-    def __init__(self) -> None:
+    def __init__(self, target_brightness: int = 110) -> None:
         """
         Creates a Stitcher object
         """
+        # History related parameters
         self.history: ImageHistory = ImageHistory()
         self.full_image: Optional[np.ndarray] = None
-        # self.last_x_offset: int = 0
-        # self.last_y_offset: int = 0
+
+        # Stitcher settings
+        self.target_brightness: int = target_brightness
 
         # Matchers
         index_params = dict(algorithm=1, trees=5)
@@ -36,22 +39,23 @@ class Stitcher:
         # SIFT feature extractor
         self.sift_extractor: cv2.SIFT = cv2.SIFT.create()
 
-    def preprocess_image(self, image: np.ndarray) -> np.ndarray:
+    def __preprocess_image(self, image: np.ndarray) -> np.ndarray:
         """
-        Preprocesses image
+        Preprocesses the given image. Converts it from BGR to BGRA and applies a mean shift
 
         :param image: Input image
         :return: Preprocessed image
         """
         image = cv2.cvtColor(image, cv2.COLOR_BGR2BGRA)
+        image = Brightness.mean_shift_gray(image, self.target_brightness)
         return image
 
     def stitch(self, image: np.ndarray, whole_image=False) -> bool:
-        current_image: np.ndarray = self.preprocess_image(image)
-        current_gray: np.ndarray = cv2.cvtColor(image, cv2.COLOR_BGRA2GRAY)
+        current_image: np.ndarray = self.__preprocess_image(image)
+        current_gray: np.ndarray = cv2.cvtColor(current_image, cv2.COLOR_BGRA2GRAY)
 
         if len(self.history) == 0:
-            self.paste_image(image)
+            self.__paste_image(current_image)
             self.history.append(
                 ImageRecord(
                     current_image,
@@ -69,17 +73,25 @@ class Stitcher:
 
         # Computes keypoints and descriptors using sift
         prev_gray: np.ndarray = last_record.warped_gray
-        kd_left = self.detect_and_compute(current_gray)
-        kd_right = self.detect_and_compute(prev_gray)
+        if whole_image:
+            prev_gray = cv2.cvtColor(
+                cv2.normalize(
+                    self.full_image,
+                    None, 0, 255, cv2.NORM_MINMAX
+                ).astype('uint8'), cv2.COLOR_BGRA2GRAY
+            )
 
+        kd_left = self.__detect_and_compute(current_gray)
+        kd_right = self.__detect_and_compute(prev_gray)
+
+        # Homography calculation loop
         initial_random_point_count: int = 16
         iterations: int = 5
         i: int = -1
         random_point_count: int = initial_random_point_count
-        # homography_det: float = 1.0
         homography: Optional[np.ndarray] = None
 
-        found_match: bool = False
+        found_homography: bool = False
         new_corners: np.ndarray = np.array([])
 
         while i < iterations:
@@ -99,6 +111,7 @@ class Stitcher:
                 0.65
             )
 
+            # If you can't find enough matches try again
             if len(matches) < random_point_count:
                 random_point_count -= 4
                 continue
@@ -107,14 +120,18 @@ class Stitcher:
                 matches,
                 random_point_count,
                 0.5,
-                1250 + i * 500
+                750 + i * 500
             )
 
+            # If you can't find a homography matrix try again
             if homography is None:
                 random_point_count -= 4
                 continue
 
-            height, width, channels = current_image.shape
+            # Find where corners end up after transformation and use
+            # that to calculate the ration between the area after the
+            # transformation and the area before the transformation
+            height, width, _ = current_image.shape
             corners: np.ndarray = np.array([
                 [0, width,  width,      0],
                 [0,     0, height, height],
@@ -125,19 +142,21 @@ class Stitcher:
             new_corners_T: np.ndarray = new_corners.T
 
             new_area: float = Util.calculate_area(new_corners_T)
-            determinant: float = new_area / (width * height)
+            area_ratio: float = new_area / (width * height)
 
-            if determinant < 0.1:
+            # If you can't find a good homography matrix try again
+            if area_ratio < 0.1:
                 continue
-            found_match = True
+            found_homography = True
             break
 
-        if not found_match:
+        # If you can't find a good homography matrix try again with whole image
+        if not found_homography:
             if not whole_image:
                 return self.stitch(image, True)
             return False
 
-        # Calculates offsets of the image
+        # Calculates offsets of the image and builds the translation matrix
         x_offset: int = -np.min(new_corners[0])
         y_offset: int = -np.min(new_corners[1])
 
@@ -147,6 +166,7 @@ class Stitcher:
             [0.0, 0.0, 1.0]
         ])
 
+        # Calculate the destination width and height
         destination_width: int = int(
             np.max(new_corners[0]) - np.min(new_corners[0])
         )
@@ -154,21 +174,27 @@ class Stitcher:
             np.max(new_corners[1]) - np.min(new_corners[1])
         )
 
+        assert homography is not None  # For typechecker
         homography = np.dot(translation_matrix, homography)
 
+        assert homography is not None  # For typechecker
+        # Warp the image
         warped_image: np.ndarray = cv2.warpPerspective(
             src=current_image,
             M=homography,
             dsize=(destination_width, destination_height)
         )
 
-        x_img, y_img = self.paste_image(
+        # Paste the image and get the x and y coordinates of the image on
+        # the self.full_image
+        x_img, y_img = self.__paste_image(
             warped_image,
             int(x_offset),
             int(y_offset),
             whole_image
         )
 
+        # Save image record to history
         warped_gray: np.ndarray = cv2.cvtColor(warped_image, cv2.COLOR_BGRA2GRAY)
 
         self.history.append(
@@ -185,12 +211,22 @@ class Stitcher:
 
         return True
 
-    def paste_image(
+    def __paste_image(
             self,
             image: np.ndarray,
             x_offset: int = 0,
             y_offset: int = 0,
             whole_image: bool = False) -> Tuple[int, int]:
+        """
+        Pastes the image to the self.full_image
+
+        :param image: Image to be pasted
+        :param x_offset: Horizontal offset from the last pasted image
+        :param y_offset: Vertical offset from the last pasted image
+        :param whole_image: If set to true, the offset applies to the whole image,
+                            not to the last pasted image
+        :return: The total offset of the image as a tuple of ints
+        """
 
         if self.full_image is None:
             # This is the first image
@@ -222,8 +258,8 @@ class Stitcher:
         # Create a new canvas and paste the full image
         self.full_image = np.zeros(shape=(new_height, new_width, channels))
         self.full_image[
-            y_full_image : y_full_image + height,
-            x_full_image : x_full_image + width,
+            y_full_image:y_full_image + height,
+            x_full_image:x_full_image + width,
             :
         ] = current_image
 
@@ -235,17 +271,23 @@ class Stitcher:
 
         for c in range(channels):
             self.full_image[
-                y_img : y_img + img_height,
-                x_img : x_img + img_width,
+                y_img:y_img + img_height,
+                x_img:x_img + img_width,
                 c
             ] = alpha_new * image[:, :, c] + self.full_image[
-                    y_img : y_img + img_height,
-                    x_img : x_img + img_width,
+                    y_img:y_img + img_height,
+                    x_img:x_img + img_width,
                     c
                 ] * (1 - alpha_new)
-        
+
         return x_img, y_img
 
-    def detect_and_compute(self, image: np.ndarray) -> KDTuple:
+    def __detect_and_compute(self, image: np.ndarray) -> KDTuple:
+        """
+        Detect and compute keypoints and descriptors of given image using SIFT
+
+        :param image: Image to find keypoints and descriptors
+        :return: Keypoints and descriptors as a KDTuple object
+        """
         kpts, descriptors = self.sift_extractor.detectAndCompute(image, None)
         return KDTuple(kpts, descriptors)
