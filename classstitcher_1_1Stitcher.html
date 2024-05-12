@@ -79,6 +79,7 @@ $(function() {
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="classstitcher_1_1Stitcher-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">stitcher.Stitcher Class Reference</div></div>
 </div><!--header-->
@@ -90,10 +91,11 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a19340a7566c9b9ea2bd6e542f64333fd" id="r_a19340a7566c9b9ea2bd6e542f64333fd"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a19340a7566c9b9ea2bd6e542f64333fd">__init__</a> (self, int target_brightness=110)</td></tr>
+<tr class="memdesc:a19340a7566c9b9ea2bd6e542f64333fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a Stitcher object.  <br /></td></tr>
 <tr class="separator:a19340a7566c9b9ea2bd6e542f64333fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a717e6d49e2de1cbf74688a6ec8996300" id="r_a717e6d49e2de1cbf74688a6ec8996300"><td class="memItemLeft" align="right" valign="top"><a id="a717e6d49e2de1cbf74688a6ec8996300" name="a717e6d49e2de1cbf74688a6ec8996300"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>stitch</b> (self, np.ndarray image, whole_image=False)</td></tr>
-<tr class="separator:a717e6d49e2de1cbf74688a6ec8996300"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a892593e72cf78d9fd878f5bc1f4437" id="r_a8a892593e72cf78d9fd878f5bc1f4437"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8a892593e72cf78d9fd878f5bc1f4437">stitch</a> (self, np.ndarray image, bool whole_image=False)</td></tr>
+<tr class="memdesc:a8a892593e72cf78d9fd878f5bc1f4437"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stitches the given image to the full_image TODO: Detailed description.  <br /></td></tr>
+<tr class="separator:a8a892593e72cf78d9fd878f5bc1f4437"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -103,9 +105,22 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a59c0fdb9324fb53854deb0b46816ee03" id="r_a59c0fdb9324fb53854deb0b46816ee03"><td class="memItemLeft" align="right" valign="top"><a id="a59c0fdb9324fb53854deb0b46816ee03" name="a59c0fdb9324fb53854deb0b46816ee03"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>full_image</b></td></tr>
 <tr class="separator:a59c0fdb9324fb53854deb0b46816ee03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:afbd0414f16c101f40a3f39d8ca5cf7e1" id="r_afbd0414f16c101f40a3f39d8ca5cf7e1"><td class="memItemLeft" align="right" valign="top">np.ndarray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afbd0414f16c101f40a3f39d8ca5cf7e1">__preprocess_image</a> (self, np.ndarray image)</td></tr>
+<tr class="memdesc:afbd0414f16c101f40a3f39d8ca5cf7e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Preprocesses the given image.  <br /></td></tr>
+<tr class="separator:afbd0414f16c101f40a3f39d8ca5cf7e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8cf46fcb0ba3921cf4abef2f63606fab" id="r_a8cf46fcb0ba3921cf4abef2f63606fab"><td class="memItemLeft" align="right" valign="top">Tuple[int, int]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8cf46fcb0ba3921cf4abef2f63606fab">__paste_image</a> (self, np.ndarray image, int x_offset=0, int y_offset=0, bool whole_image=False)</td></tr>
+<tr class="memdesc:a8cf46fcb0ba3921cf4abef2f63606fab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pastes the image to the full_image TODO: Detailed description.  <br /></td></tr>
+<tr class="separator:a8cf46fcb0ba3921cf4abef2f63606fab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa27f0b74c3cb91ac81586e185140f468" id="r_aa27f0b74c3cb91ac81586e185140f468"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classkdtuple_1_1KDTuple.html">KDTuple</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa27f0b74c3cb91ac81586e185140f468">__detect_and_compute</a> (self, np.ndarray image)</td></tr>
+<tr class="memdesc:aa27f0b74c3cb91ac81586e185140f468"><td class="mdescLeft">&#160;</td><td class="mdescRight">Detect and compute keypoints and descriptors of given image using SIFT.  <br /></td></tr>
+<tr class="separator:aa27f0b74c3cb91ac81586e185140f468"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Stitcher is responsible with stitching provided images. </p>
+<p>TODO: Stitcher detailed description </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a19340a7566c9b9ea2bd6e542f64333fd" name="a19340a7566c9b9ea2bd6e542f64333fd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a19340a7566c9b9ea2bd6e542f64333fd">&#9670;&#160;</a></span>__init__()</h2>
@@ -125,8 +140,185 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">Creates a Stitcher object
-</pre> 
+
+<p>Creates a Stitcher object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">target_brightness</td><td>Target brightness of the input images. TODO: pass settings as a dictionary </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="aa27f0b74c3cb91ac81586e185140f468" name="aa27f0b74c3cb91ac81586e185140f468"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa27f0b74c3cb91ac81586e185140f468">&#9670;&#160;</a></span>__detect_and_compute()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"> <a class="el" href="classkdtuple_1_1KDTuple.html">KDTuple</a> stitcher.Stitcher.__detect_and_compute </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">np.ndarray</td>          <td class="paramname"><span class="paramname"><em>image</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Detect and compute keypoints and descriptors of given image using SIFT. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">image</td><td>Image to find keypoints and descriptors </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Keypoints and descriptors as a KDTuple object </dd></dl>
+
+</div>
+</div>
+<a id="a8cf46fcb0ba3921cf4abef2f63606fab" name="a8cf46fcb0ba3921cf4abef2f63606fab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8cf46fcb0ba3921cf4abef2f63606fab">&#9670;&#160;</a></span>__paste_image()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"> Tuple[int, int] stitcher.Stitcher.__paste_image </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">np.ndarray</td>          <td class="paramname"><span class="paramname"><em>image</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int </td>          <td class="paramname"><span class="paramname"><em>x_offset</em><span class="paramdefsep"> = </span><span class="paramdefval">0</span>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int </td>          <td class="paramname"><span class="paramname"><em>y_offset</em><span class="paramdefsep"> = </span><span class="paramdefval">0</span>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool </td>          <td class="paramname"><span class="paramname"><em>whole_image</em><span class="paramdefsep"> = </span><span class="paramdefval">False</span></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Pastes the image to the full_image TODO: Detailed description. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">image</td><td>Image to be pasted </td></tr>
+    <tr><td class="paramname">x_offset</td><td>Horizontal offset from the last pasted image </td></tr>
+    <tr><td class="paramname">y_offset</td><td>Vertical offset from the last pasted image </td></tr>
+    <tr><td class="paramname">whole_image</td><td>If set to true, the offset applies to the whole image, not to the last pasted image</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The total offset of the image as a tuple of ints </dd></dl>
+
+</div>
+</div>
+<a id="afbd0414f16c101f40a3f39d8ca5cf7e1" name="afbd0414f16c101f40a3f39d8ca5cf7e1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afbd0414f16c101f40a3f39d8ca5cf7e1">&#9670;&#160;</a></span>__preprocess_image()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"> np.ndarray stitcher.Stitcher.__preprocess_image </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">np.ndarray</td>          <td class="paramname"><span class="paramname"><em>image</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Preprocesses the given image. </p>
+<p>Converts it from BGR to BGRA and applies a mean shift to shift the mean of the image to the target_brightness parameter</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">image</td><td>Input image</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Preprocessed image </dd></dl>
+
+</div>
+</div>
+<a id="a8a892593e72cf78d9fd878f5bc1f4437" name="a8a892593e72cf78d9fd878f5bc1f4437"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a892593e72cf78d9fd878f5bc1f4437">&#9670;&#160;</a></span>stitch()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> bool stitcher.Stitcher.stitch </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">np.ndarray</td>          <td class="paramname"><span class="paramname"><em>image</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool </td>          <td class="paramname"><span class="paramname"><em>whole_image</em><span class="paramdefsep"> = </span><span class="paramdefval">False</span></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Stitches the given image to the full_image TODO: Detailed description. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">image</td><td>Image to stitch </td></tr>
+    <tr><td class="paramname">whole_image</td><td>If set to true, it uses full_image instead of the last stitched image for stitching</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if stitching was successful, False otherwise </dd></dl>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>

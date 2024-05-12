@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['matcher_0',['Matcher',['../classmatcher_1_1Matcher.html',1,'matcher']]]
+  ['stitcher_0',['Stitcher',['../classstitcher_1_1Stitcher.html',1,'stitcher']]]
 ];

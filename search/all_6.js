@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['match_0',['match',['../classmatcher_1_1Matcher.html#af168b0074f641377cd85bc5ce7bc123a',1,'matcher::Matcher']]],
-  ['matcher_1',['Matcher',['../classmatcher_1_1Matcher.html',1,'matcher']]]
+  ['ransac_0',['ransac',['../classhomography__calculator_1_1HomographyCalculator.html#a047cf1621eca0e2fa32f0fa4b0f34024',1,'homography_calculator::HomographyCalculator']]]
 ];

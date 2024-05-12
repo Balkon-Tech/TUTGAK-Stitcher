@@ -89,10 +89,13 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a6c7ab5f925ad4ddd6f546d48e3680169" id="r_a6c7ab5f925ad4ddd6f546d48e3680169"><td class="memItemLeft" align="right" valign="top">np.ndarray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6c7ab5f925ad4ddd6f546d48e3680169">calculate_homography_error</a> (np.ndarray points, np.ndarray H)</td></tr>
+<tr class="memdesc:a6c7ab5f925ad4ddd6f546d48e3680169"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates an error value for the given homography matrix TODO: Detailed description.  <br /></td></tr>
 <tr class="separator:a6c7ab5f925ad4ddd6f546d48e3680169"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9d2970d8b383810a188c022bd4bc3fc9" id="r_a9d2970d8b383810a188c022bd4bc3fc9"><td class="memItemLeft" align="right" valign="top">np.ndarray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9d2970d8b383810a188c022bd4bc3fc9">calculate_homography</a> (np.ndarray pairs)</td></tr>
+<tr class="memdesc:a9d2970d8b383810a188c022bd4bc3fc9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the homography matrix for the given pairs of points TODO: Detailed description.  <br /></td></tr>
 <tr class="separator:a9d2970d8b383810a188c022bd4bc3fc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a047cf1621eca0e2fa32f0fa4b0f34024" id="r_a047cf1621eca0e2fa32f0fa4b0f34024"><td class="memItemLeft" align="right" valign="top">Optional[np.ndarray]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a047cf1621eca0e2fa32f0fa4b0f34024">ransac</a> (np.ndarray matches, int random_point_count, float threshold, int iterations)</td></tr>
+<tr class="memdesc:a047cf1621eca0e2fa32f0fa4b0f34024"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use RANSAC to calculate a good homography matrix TODO: Detailed desctiption.  <br /></td></tr>
 <tr class="separator:a047cf1621eca0e2fa32f0fa4b0f34024"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -120,11 +123,16 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<pre class="fragment">Calculates the homography matrix for the given pairs
 
-:param pairs: Matching pairs of coordinates
-:return: Homography matrix
-</pre> 
+<p>Calculates the homography matrix for the given pairs of points TODO: Detailed description. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pairs</td><td>Matching pairs of coordinates</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Homography matrix </dd></dl>
+
 </div>
 </div>
 <a id="a6c7ab5f925ad4ddd6f546d48e3680169" name="a6c7ab5f925ad4ddd6f546d48e3680169"></a>
@@ -153,12 +161,17 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<pre class="fragment">Calculates an error value for the given homography matrix
 
-:param points: Point pairs
-:param H: Homography matrix
-:return: Error of each point
-</pre> 
+<p>Calculates an error value for the given homography matrix TODO: Detailed description. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">points</td><td>Point pairs </td></tr>
+    <tr><td class="paramname">H</td><td>Homography matrix</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An error value for each point </dd></dl>
+
 </div>
 </div>
 <a id="a047cf1621eca0e2fa32f0fa4b0f34024" name="a047cf1621eca0e2fa32f0fa4b0f34024"></a>
@@ -197,15 +210,19 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<pre class="fragment">Use RANSAC to calculate a good homography matrix
 
-:param matches: Matched points
-:param random_point_count: The amount of random points used to
-                           calculate the homography matrix
-:param threshold: Error threshold
-:param iterations: Number of iterations
-:return: A good homography matrix, or None if none could be found
-</pre> 
+<p>Use RANSAC to calculate a good homography matrix TODO: Detailed desctiption. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">matches</td><td>Matched points </td></tr>
+    <tr><td class="paramname">random_point_count</td><td>The amount of random points used to calculate the homography matrix </td></tr>
+    <tr><td class="paramname">threshold</td><td>Error threshold </td></tr>
+    <tr><td class="paramname">iterations</td><td>Number of iterations</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A good homography matrix, or None if none could be found </dd></dl>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>

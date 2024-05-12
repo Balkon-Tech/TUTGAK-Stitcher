@@ -130,11 +130,14 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<pre class="fragment">Performs a KnnMatch between kd_left.descriptor and kd_right.descriptor.
-Filters out the bad matches and returns the matches as np.ndarray
+<pre class="fragment">@brief Performs a match between two KDTuples
+Performs a KnnMatch between kd_left.descriptor and kd_right.descriptor.
+Filters out the bad matches and returns the good matches as an np.ndarray
 
-:param matcher: Matcher object
-:param threshold: Filter threshold. Defaults to 0.75
+@param matcher Matcher object
+@param threshold Filter threshold. Defaults to 0.75
+
+@return Good matches
 </pre> 
 </div>
 </div>

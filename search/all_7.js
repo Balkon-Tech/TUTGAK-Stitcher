@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['ransac_0',['ransac',['../classhomography__calculator_1_1HomographyCalculator.html#a047cf1621eca0e2fa32f0fa4b0f34024',1,'homography_calculator::HomographyCalculator']]]
+  ['stitch_0',['stitch',['../classstitcher_1_1Stitcher.html#a8a892593e72cf78d9fd878f5bc1f4437',1,'stitcher::Stitcher']]],
+  ['stitcher_1',['Stitcher',['../classstitcher_1_1Stitcher.html',1,'stitcher']]]
 ];
