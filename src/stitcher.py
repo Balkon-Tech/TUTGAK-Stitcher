@@ -5,7 +5,6 @@ from image_history import ImageHistory
 from image_record import ImageRecord
 from typing import Optional, Tuple
 from kdtuple import KDTuple
-from matcher import Matcher
 from util import Util
 import math
 
@@ -121,7 +120,7 @@ class Stitcher:
             if i >= 2:
                 matcher = self.bf_matcher
 
-            matches: np.ndarray = Matcher.match(
+            matches: np.ndarray = Util.match(
                 matcher,
                 kd_left,
                 kd_right,
@@ -137,7 +136,7 @@ class Stitcher:
                 matches,
                 random_point_count,
                 0.5,
-                750 + i * 500
+                1250 + i * 500
             )
 
             # If you can't find a homography matrix try again
@@ -286,18 +285,33 @@ class Stitcher:
         x_img: int = x_full_image + last_x - x_offset
         y_img: int = y_full_image + last_y - y_offset
 
-        alpha_new = image[:, :, 3] / 255
+        # alpha_new = image[:, :, 3] / 255
+        # alpha_new = alpha_new.reshape(alpha_new.shape[0], alpha_new.shape[1], 1)
+        # alpha_new = np.repeat(alpha_new, 4, axis=2)
 
-        for c in range(channels):
-            self.full_image[
+        image_filter = image.copy()
+        image_filter[image_filter > 0] = 1
+
+        full_image_filter = self.full_image[y_img:y_img + img_height, x_img:x_img + img_width, :].copy()
+        full_image_filter[full_image_filter > 0] = 1
+
+        image_filter = (image_filter + full_image_filter)
+        full_image_filter = image_filter.copy()
+        
+        image_filter[image_filter > 1] = 0.0
+        full_image_filter[full_image_filter > 1] = 1.0
+
+        # filter1 *= alpha_new
+
+        self.full_image[
+            y_img:y_img + img_height,
+            x_img:x_img + img_width,
+            :
+        ] = image_filter * image[:, :, :] + self.full_image[
                 y_img:y_img + img_height,
                 x_img:x_img + img_width,
-                c
-            ] = alpha_new * image[:, :, c] + self.full_image[
-                    y_img:y_img + img_height,
-                    x_img:x_img + img_width,
-                    c
-                ] * (1 - alpha_new)
+                :
+            ] * full_image_filter
 
         return x_img, y_img
 
