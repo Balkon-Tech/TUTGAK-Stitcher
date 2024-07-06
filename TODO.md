@@ -3,6 +3,6 @@
 + [X] Working program
 + [] Unit Tests
 + [~] Lighting differences
-+ [] Manage stitcher settings with python dictionaries
++ [X] Stitcher settings as parameters
 + [] Set up Doxygen Awesome
-+ [] Better comments & docs
++ [X] Better comments & docs
