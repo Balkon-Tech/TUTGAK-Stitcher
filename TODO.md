@@ -4,5 +4,5 @@
 + [] Unit Tests
 + [~] Lighting differences
 + [X] Stitcher settings as parameters
-+ [] Set up Doxygen Awesome
++ [X] Set up Doxygen Awesome
 + [X] Better comments & docs
