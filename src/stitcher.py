@@ -13,22 +13,71 @@ class Stitcher:
     """!
         @brief Stitcher is responsible with stitching provided images
 
-        TODO: Stitcher detailed description
+        Stitching process goes like this:
+        - If the provided image is the first image, set self.image to that image and stop
+        - Otherwise, take the current image with last image and calculate the homography
+          matrix between the images and applies it to the current image. Also calculates
+          the where that image should be positioned in the final image.
+        - To paste the image, stitcher first creates a new canvas and pastes the old image
+          and the warped image to the correct position. There are two blending modes: legacy
+          mode and the new mode. Legacy mode is just alpha blending. The new mode however,
+          mixes the overlapping parts of two images by a predefined constant.
     """
 
-    def __init__(self, target_brightness: int = 110) -> None:
+    def __init__(self, *,
+                 target_image_mean: int=110,
+                 legacy_paste: bool=False,
+                 new_image_percentage: float=0.75,
+                 min_homography_determinant: float=0.1,
+                 filter_threshold: float=0.65,
+                 max_iterations_before_fail: int=5,
+                 stitch_with_whole_image_on_fail: bool=True,
+                 initial_random_point_count: int=16,
+                 ransac_threshold: float=0.5,
+                 initial_ransac_iterations=1250,
+                 ransac_steps=500) -> None:
         """!
         @brief Creates a Stitcher object
 
-        @param target_brightness Target brightness of the input images.
-        TODO: pass settings as a dictionary
+        @param target_image_mean The target brightness value of input images
+        @param legacy_paste Turn on legacy paste mode. The difference between legacy paste
+               and new paste modes are explained in the class description.
+        @param new_image_percentage Used when mixing two images in the new paste mode.
+               Does a linear interpolation between the pixels of the old image and the new
+               image. Essentially c*new + (1-c)*old where c is this constant.
+        @param min_homography_determinant Minimum allowed value for the determinant of the
+               homography matrix.
+        @param filter_threshold A threshold value used to filter in the Util.match function.
+        @param max_iterations_before_fail If a step fails, instead of erroring out, the stitcher
+               tries stitching again with different values until a match is found. This is the
+               number of tries before failure.
+        @param stitch_with_whole_image_on_fail If stitcher fails to stitch and image with its
+               predecessor image and this option is enabled, it tries to stitch it with the
+               whole image and starts the whole process again.
+        @param initial_random_point_count The ransac works by picking some random points and
+               checking if they are "good". On each fail the stitcher decreases this value by
+               4. However, the minimum point count is 4.
+        @param ransac_threshold A threshold value to determine if a point is "good" in the ransac
+               algorithm
+        @param initial_ransac_iterations The initial iteration count for ransac
+        @param ransac_steps After each failure, the iteration count increases by this value
         """
         # History related parameters
         self.history: ImageHistory = ImageHistory()
         self.full_image: Optional[np.ndarray] = None
 
         # Stitcher settings
-        self.target_brightness: int = target_brightness
+        self.target_image_mean: int = target_image_mean
+        self.legacy_paste: bool = legacy_paste
+        self.new_image_percentage: float = new_image_percentage
+        self.min_homography_determinant: float = min_homography_determinant
+        self.filter_threshold: float = filter_threshold
+        self.stitch_with_whole_image_on_fail: bool = stitch_with_whole_image_on_fail
+        self.max_iterations_before_fail: int = max_iterations_before_fail
+        self.initial_random_point_count: int = initial_random_point_count
+        self.ransac_threshold: float = ransac_threshold
+        self.initial_ransac_iterations: int = initial_ransac_iterations
+        self.ransac_steps: int = ransac_steps
 
         # Matchers
         index_params = dict(algorithm=1, trees=5)
@@ -53,13 +102,14 @@ class Stitcher:
         @return Preprocessed image
         """
         image = cv2.cvtColor(image, cv2.COLOR_BGR2BGRA)
-        image = Util.mean_shift_gray(image, self.target_brightness)
+        image = Util.mean_shift_gray(image, self.target_image_mean)
         return image
 
     def stitch(self, image: np.ndarray, whole_image: bool = False) -> bool:
         """!
         @brief Stitches the given image to the full_image
-        TODO: Detailed description
+
+               The process is explained in the class description.
 
         @param image: Image to stitch
         @param whole_image: If set to true, it uses full_image instead of the last stitched
@@ -101,10 +151,9 @@ class Stitcher:
         kd_right = self.__detect_and_compute(prev_gray)
 
         # Homography calculation loop
-        initial_random_point_count: int = 16
-        iterations: int = 5
+        iterations: int = self.max_iterations_before_fail
         i: int = -1
-        random_point_count: int = initial_random_point_count
+        random_point_count: int = self.initial_random_point_count
         homography: Optional[np.ndarray] = None
 
         found_homography: bool = False
@@ -124,7 +173,7 @@ class Stitcher:
                 matcher,
                 kd_left,
                 kd_right,
-                0.65
+                self.filter_threshold
             )
 
             # If you can't find enough matches try again
@@ -135,8 +184,8 @@ class Stitcher:
             homography = HomographyCalculator.ransac(
                 matches,
                 random_point_count,
-                0.5,
-                1250 + i * 500
+                self.ransac_threshold,
+                self.initial_ransac_iterations + i * self.ransac_steps
             )
 
             # If you can't find a homography matrix try again
@@ -161,14 +210,14 @@ class Stitcher:
             area_ratio: float = new_area / (width * height)
 
             # If you can't find a good homography matrix try again
-            if area_ratio < 0.1:
+            if area_ratio < self.min_homography_determinant:
                 continue
             found_homography = True
             break
 
         # If you can't find a good homography matrix try again with whole image
         if not found_homography:
-            if not whole_image:
+            if not whole_image and self.stitch_with_whole_image_on_fail:
                 return self.stitch(image, True)
             return False
 
@@ -235,7 +284,6 @@ class Stitcher:
             whole_image: bool = False) -> Tuple[int, int]:
         """!
         @brief Pastes the image to the full_image
-        TODO: Detailed description
 
         @param image Image to be pasted
         @param x_offset Horizontal offset from the last pasted image
@@ -285,32 +333,40 @@ class Stitcher:
         x_img: int = x_full_image + last_x - x_offset
         y_img: int = y_full_image + last_y - y_offset
 
-        # alpha_new = image[:, :, 3] / 255
-        # alpha_new = alpha_new.reshape(alpha_new.shape[0], alpha_new.shape[1], 1)
-        # alpha_new = np.repeat(alpha_new, 4, axis=2)
+        if self.legacy_paste:
+            alpha_new = image[:, :, 3] / 255
 
-        image_filter = image.copy()
-        image_filter[image_filter > 0] = 1
+            for c in range(channels):
+                self.full_image[
+                    y_img:y_img + img_height,
+                    x_img:x_img + img_width,
+                    c
+                ] = alpha_new * image[:, :, c] + self.full_image[
+                        y_img:y_img + img_height,
+                        x_img:x_img + img_width,
+                        c
+                    ] * (1 - alpha_new)
+        else:
+            image_filter = image.copy()
+            image_filter[image_filter > 0] = 1
 
-        full_image_filter = self.full_image[y_img:y_img + img_height, x_img:x_img + img_width, :].copy()
-        full_image_filter[full_image_filter > 0] = 1
+            full_image_filter = self.full_image[y_img:y_img + img_height, x_img:x_img + img_width, :].copy()
+            full_image_filter[full_image_filter > 0] = 1
 
-        image_filter = (image_filter + full_image_filter)
-        full_image_filter = image_filter.copy()
-        
-        image_filter[image_filter > 1] = 0.0
-        full_image_filter[full_image_filter > 1] = 1.0
+            image_filter = (image_filter + full_image_filter)
+            full_image_filter = image_filter.copy()
 
-        # filter1 *= alpha_new
+            image_filter[image_filter > 1] = self.new_image_percentage
+            full_image_filter[full_image_filter > 1] = 1.0 - self.new_image_percentage
 
-        self.full_image[
-            y_img:y_img + img_height,
-            x_img:x_img + img_width,
-            :
-        ] = image_filter * image[:, :, :] + self.full_image[
+            self.full_image[
                 y_img:y_img + img_height,
                 x_img:x_img + img_width,
                 :
+            ] = image_filter * image[:, :, :] + self.full_image[
+                    y_img:y_img + img_height,
+                    x_img:x_img + img_width,
+                    :
             ] * full_image_filter
 
         return x_img, y_img

@@ -28,7 +28,7 @@ class Util:
         """!
         @brief Applies a mean shift to given image
 
-        @param image Image to apply mean shift 
+        @param image Image to apply mean shift
         @param dest_mean Destination mean
 
         @return Mean shifted image

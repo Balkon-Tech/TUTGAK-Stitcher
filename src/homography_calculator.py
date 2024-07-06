@@ -13,7 +13,6 @@ class HomographyCalculator:
             H: np.ndarray) -> np.ndarray:
         """!
         @brief Calculates an error value for the given homography matrix
-        TODO: Detailed description
 
         @param points Point pairs
         @param H Homography matrix
@@ -45,7 +44,6 @@ class HomographyCalculator:
     def calculate_homography(pairs: np.ndarray) -> np.ndarray:
         """!
         @brief Calculates the homography matrix for the given pairs of points
-        TODO: Detailed description
 
         @param pairs Matching pairs of coordinates
 
@@ -85,7 +83,6 @@ class HomographyCalculator:
             iterations: int) -> Optional[np.ndarray]:
         """!
         @brief Use RANSAC to calculate a good homography matrix
-        TODO: Detailed desctiption
 
         @param matches Matched points
         @param random_point_count The amount of random points used to
